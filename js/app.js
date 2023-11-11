@@ -1,3 +1,4 @@
+// Fonction pour mettre à jour la quantité d'un produit dans le panier
 function CaisseMAJ(produit, prix, nombreProduit) {
     const produitInput = document.getElementById(produit + '-nombre');
     let NombreInput = parseInt(produitInput.value); 
@@ -38,25 +39,24 @@ function calculateTotal() {
     document.getElementById('sub-total').innerText = subTotal;
 }
 
-function removeArticle(articleId) {
-    
+function removeArticle(articleId, prix, detail) {
     const articleContainer = document.getElementById(articleId);
     articleContainer.remove();
-}
 
+    const subTotalElement = document.getElementById('sub-total');
+    const currentSubTotal = parseInt(subTotalElement.textContent);
+    subTotalElement.textContent = currentSubTotal - (prix * detail);
+}
 document.getElementById('art1-remove').addEventListener('click', function (e) {
-    document.getElementById('art1-unit').innerText = "0";
-    calculateTotal();
     e.preventDefault();
-    removeArticle('article1');
+    removeArticle('article1', getPriceValue('art1'), getInputvalue('art1'));
 });
 
 document.getElementById('art2-remove').addEventListener('click', function (e) {
-    document.getElementById('art2-unit').innerText = "0";
-    calculateTotal();
     e.preventDefault();
-    removeArticle('article2');
+    removeArticle('article2', getPriceValue('art2'), getInputvalue('art2'));
 });
+
 
 //article 1
 document.getElementById('art1-plus').addEventListener('click', function () {
@@ -104,4 +104,3 @@ function isLikeButton(buttonId) {
 // Appel de la fonction pour les deux boutons
 isLikeButton('art1-like');
 isLikeButton('art2-like');
-
